@@ -1,23 +1,21 @@
 import React, {useEffect,useState} from 'react'
 import axios from 'axios'
-import { usePapaParse } from 'react-papaparse';
 import Papa from "papaparse";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import QuotePopUp from './QuotePopUp';
 
 
 
 export default function Data() {
  
-
-const { readRemoteFile } = usePapaParse();
-
     const [item,setitem] = useState([])
-    const [parsedString, setParsedString] = useState();
     const [filterval,setfilterval]=useState('');
     const [searchapidata, setsearchapidata] = useState([]);
+    const [showPopUp, setShowPopUp] = useState(false);
+    const [popUpData, setPopUpData] = useState([]);
     
     useEffect(()=>{
-        const fetching = async ()=>{
+        const fetchtable = async ()=>{
             const s = await axios.get('https://prototype.sbulltech.com/api/v2/instruments')
             // console.log(s.data)
             const m=s.data
@@ -30,7 +28,7 @@ const { readRemoteFile } = usePapaParse();
                 return result
               }
            });
-           console.log(json.data)
+          //  console.log(json.data)
            json.data.shift()
            json.data.pop()
            setitem(json.data.length>1 && json.data.map(it=>{
@@ -43,7 +41,7 @@ const { readRemoteFile } = usePapaParse();
            }))
            
         }
-        fetching()
+        fetchtable()
         
 
     },[])
@@ -62,10 +60,10 @@ const { readRemoteFile } = usePapaParse();
       }
       setfilterval(e.target.value)
     }
-    const mystyle={
-      
-
-    }
+    const popupToggle = (e) => {
+      setPopUpData(e);
+      setShowPopUp(!showPopUp);
+    };
   return (
     <div className='mx-5'>
      {/* {item?.data?.length > 1 &&
@@ -94,7 +92,7 @@ const { readRemoteFile } = usePapaParse();
           return(
             <tbody className='table-striped'>
             <tr>
-              <td>{it[0]}</td>
+              <td onClick={(e)=>popupToggle(e)}>{it[0]}</td>
               <td>{it[1]}</td>
               <td>{it[2]}</td>
             </tr>
@@ -103,6 +101,7 @@ const { readRemoteFile } = usePapaParse();
         })
       }
      </table>
+     <QuotePopUp showPopUp={showPopUp} setShowPopUp={setShowPopUp} symbol={popUpData}/>
     </div>
   )
 }
