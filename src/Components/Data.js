@@ -92,7 +92,7 @@ export default function Data() {
           return(
             <tbody className='table-striped'>
             <tr>
-              <td onClick={(e)=>popupToggle(e)}>{it[0]}</td>
+              <td onClick={()=>popupToggle(it[0])}>{it[0]}</td>
               <td>{it[1]}</td>
               <td>{it[2]}</td>
             </tr>
