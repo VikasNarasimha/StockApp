@@ -85,7 +85,7 @@ export default function Data() {
      <h1 style={{fontSize:52}} >Stock App</h1>
      </div>
      <div className='p-3 my-3' style={{textAlign:'center'}}>
-      <input type='search' placeholder='Search Symbol or Name' value={filterval} onInput={(e)=>handlefilter(e)}/>
+      <input type='search' style={{width:193}} placeholder='Search Symbol or Name' value={filterval} onInput={(e)=>handlefilter(e)}/>
      </div>
      <table className='table table-bordered table-hover my-3 p-3' style={{textAlign:'center'}}>
       <thead className='table-dark'>
@@ -110,7 +110,7 @@ export default function Data() {
       }
      </table>
     
-       <QuotePopUp showPopUp={showPopUp} setShowPopUp={setShowPopUp} symbol={popUpData} quotedata={quotedata}/>
+       <QuotePopUp showPopUp={showPopUp} setShowPopUp={setShowPopUp} symbol={popUpData} quotedata={quotedata} setquotedata={setquotedata}/>
     
     </div>
   )

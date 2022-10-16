@@ -1,8 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "../../node_modules/bootstrap/dist/js/bootstrap.js";
 import axios from 'axios'
 
-export default function QuotePopUp({showPopUp,setShowPopUp,symbol,quotedata}) {
+export default function QuotePopUp({showPopUp,setShowPopUp,symbol,quotedata,setquotedata}) {
+   const sorting = (da,val)=>{
+    da && da.map((d)=>{
+      if(val === 'ASC'){
+        const sorted = [...quotedata].sort((a,b)=>
+          a.time > b.time? 1 : -1
+        )
+       setquotedata(sorted) 
+      }
+      else{
+        const sorted = [...quotedata].sort((a,b)=>
+          a.time < b.time? 1 : -1
+        )
+       setquotedata(sorted) 
+      }
+
+    })
+   }
     // const [quotedata,setquotedata] = useState()
 
         // const fetchquote = async()=>{
@@ -31,13 +49,21 @@ export default function QuotePopUp({showPopUp,setShowPopUp,symbol,quotedata}) {
     const popornot=()=>{
         setShowPopUp(!showPopUp)
     } 
-    const showHideClassName = showPopUp ? "modal d-flex w-100 bg-white justify-content-center min-vh-100 min-vw-100 align-items-center" : "modal d-none";
+    const showHideClassName = showPopUp ? "modal d-flex w-100 bg-light mh-100 justify-content-center align-items-center" : "modal d-none";
 
   return (
     <div className={showHideClassName}>
-    <div className='w-50 w-75 bg-dark zindex-modal '>
-      <section className="position-fixed">
-        <table>
+    <div className='w-50 w-75 zindex-modal '>
+      <section className="position-relative">
+        <h1 style={{textAlign:'center'}}>Quotes Page</h1>
+        <table className='table table-bordered table-hover table-striped my-5'>
+        <thead className='thead-active'>
+        <tr>
+        <th>Price</th>
+        <th>Time</th>
+        <th>Valid_Till</th>
+      </tr>
+        </thead>
             {
                 quotedata && quotedata.map(op=>{
                     return(
@@ -46,8 +72,6 @@ export default function QuotePopUp({showPopUp,setShowPopUp,symbol,quotedata}) {
                         <td>{op.price}</td>
                         <td>{op.time}</td>
                         <td>{op.valid_till}</td>
-                        {/* <td>{it[1]}</td>
-                        <td>{it[2]}</td> */}
                       </tr>
                       </tbody>
                     )
@@ -55,7 +79,15 @@ export default function QuotePopUp({showPopUp,setShowPopUp,symbol,quotedata}) {
                 )
         }
         </table>
-       
+        <div className="dropdown">
+  <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+    Sort By Time
+  </button>
+  <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <li><a className="dropdown-item" href="#" onClick={()=>sorting(quotedata,'ASC')}>Ascending Order</a></li>
+    <li><a className="dropdown-item" href="#" onClick={()=>sorting(quotedata)}>Descending Order</a></li>
+  </ul>
+</div>
         
         <button type="button" className='btn btn-primary' onClick={popornot}>
           Close
