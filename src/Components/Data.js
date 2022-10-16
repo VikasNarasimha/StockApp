@@ -76,6 +76,20 @@ export default function Data() {
     setPopUpData(Symbol);
     setShowPopUp(!showPopUp);
   };
+  setInterval(() => {
+    var dt = new Date();
+    var date = dt.getUTCFullYear() + '-' + dt.getUTCMonth() + '-' + dt.getUTCDate()
+    var time = dt.getUTCHours() + ':' + dt.getUTCMinutes() + ':' + dt.getUTCSeconds()
+    var date_time = date + ' ' + time
+
+    quotedata && quotedata.map((it)=>{
+      if(Date.parse(date_time)>Date.parse(it.valid_till)){
+        popupToggle()
+        console.log("frfhfrch")
+      }
+    }
+    )
+  }, 4000);
   return (
     <div className="mx-5">
       {/* {item?.data?.length > 1 &&

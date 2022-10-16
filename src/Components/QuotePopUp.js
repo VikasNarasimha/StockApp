@@ -36,7 +36,7 @@ export default function QuotePopUp({
       <div className="w-50 w-75 zindex-modal ">
         <section className="position-relative">
           <h1 style={{ textAlign: "center" }}>Quotes Page</h1>
-          <table className="table table-bordered table-hover table-striped my-5">
+          <table className="table table-bordered table-hover table-striped my-5" style={{textAlign:"center"}}>
             <thead className="thead-active">
               <tr>
                 <th>Price</th>
@@ -89,7 +89,7 @@ export default function QuotePopUp({
             </ul>
           </div>
 
-          <button type="button" className="btn btn-primary" onClick={popornot}>
+          <button type="button" className="btn btn-primary" style={{float:'right'}} onClick={popornot}>
             Close
           </button>
         </section>
