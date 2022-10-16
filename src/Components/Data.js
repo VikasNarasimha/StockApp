@@ -13,6 +13,7 @@ export default function Data() {
     const [searchapidata, setsearchapidata] = useState([]);
     const [showPopUp, setShowPopUp] = useState(false);
     const [popUpData, setPopUpData] = useState([]);
+    const [quotedata,setquotedata] = useState()
     
     useEffect(()=>{
         const fetchtable = async ()=>{
@@ -60,7 +61,14 @@ export default function Data() {
       }
       setfilterval(e.target.value)
     }
-    const popupToggle = (e) => {
+    const popupToggle = async (e) => {
+       await axios.get(`https://prototype.sbulltech.com/api/v2/quotes/${e}`)
+                // .then((res)=>res.json())
+                .then(data=>{
+                    setquotedata(data?.data?.payload[e])
+                    // setShowPopUp(!showPopUp)
+                    
+                })
       setPopUpData(e);
       setShowPopUp(!showPopUp);
     };
@@ -101,7 +109,9 @@ export default function Data() {
         })
       }
      </table>
-     <QuotePopUp showPopUp={showPopUp} setShowPopUp={setShowPopUp} symbol={popUpData}/>
+    
+       <QuotePopUp showPopUp={showPopUp} setShowPopUp={setShowPopUp} symbol={popUpData} quotedata={quotedata}/>
+    
     </div>
   )
 }
